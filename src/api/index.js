@@ -4,7 +4,7 @@
  * You need to replace YOUR_API_KEY in the string associated with KEY with your actual API key
  */
 export const BASE_URL = 'https://api.harvardartmuseums.org';
-export const KEY = 'apikey=9c817fa2-f416-444e-86ec-718e9ac58211';
+export const KEY = process.env.REACT_APP_API_KEY
 
 /**
  * This will make a call to the API for a single term and value (e.g. "person", and "unknown"), and return the result
@@ -96,6 +96,26 @@ export async function fetchAllClassifications() {
     const records = data.records;
 
     localStorage.setItem('classifications', JSON.stringify(records));
+
+    return records;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function fetchAllMedium() {
+  if (localStorage.getItem('medium')) {
+    return JSON.parse(localStorage.getItem('medium'));
+  }
+
+  const url = `${ BASE_URL }/classification?${ KEY }&size=100&sort=name`;
+
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    const records = data.records;
+
+    localStorage.setItem('medium', JSON.stringify(records));
 
     return records;
   } catch (error) {

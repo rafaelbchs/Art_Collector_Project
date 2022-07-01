@@ -6,16 +6,23 @@ import React, { useEffect, useState } from 'react';
 import { 
   fetchAllCenturies,
   fetchAllClassifications,
-  fetchQueryResults
+  fetchQueryResults,
+  fetchAllMedium
 } from '../api';
 
 const Search = (props) => {
   const {setSearchResults, setIsLoading} = props
+
   const [centuryList, setCenturyList] = useState([])
   const [classificationList, setClassificationList] = useState([])
+
   const [queryString, setQueryString] = useState('')
+
   const [century, setCentury] = useState('any')
   const [classification, setClassification] = useState('any')
+
+  const [medium, setMedium] = useState("any")
+  const [mediumList, setMediumList] = useState([])
   
   // Make sure to destructure setIsLoading and setSearchResults from the props
   /**
@@ -37,11 +44,11 @@ const Search = (props) => {
    */
   useEffect(() => {
     try{
-    Promise.all([fetchAllCenturies(),fetchAllClassifications()])
-    .then(([centuries,classifications]) => {
+    Promise.all([fetchAllCenturies(),fetchAllClassifications(),fetchAllMedium()])
+    .then(([centuries,classifications,medium]) => {
         setCenturyList(centuries);
         setClassificationList(classifications);
-
+        setMediumList(medium)
       }
     )}
     catch(error){
@@ -73,7 +80,9 @@ const Search = (props) => {
       const results = await fetchQueryResults({
         century,
         classification,
+        medium,
         queryString
+        
       })
       setSearchResults(results);
     }catch(error){
@@ -116,6 +125,19 @@ const Search = (props) => {
           <option value="any">Any</option>
         {centuryList.map((value)=>{
          
+          return <option value={value.name}>{value.name}</option>
+        })}
+      </select>
+     </fieldset>
+     <fieldset>
+      <label htmlFor="select-medium">Medium <span className="medium-count">({ mediumList.length })</span></label>
+      <select 
+        name="medium" 
+        id="select-medium"
+        value={medium} 
+        onChange={(event)=>{setMedium(event.target.value)}}>
+          <option value="any">Any</option>
+        {mediumList.map((value)=>{   
           return <option value={value.name}>{value.name}</option>
         })}
       </select>
