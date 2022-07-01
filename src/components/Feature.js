@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 
 // Don't touch this import
 import { fetchQueryResultsFromTermAndValue } from '../api';
+import Title from './Title';
 
 /**
  * We need a new component called Searchable which:
@@ -30,6 +31,24 @@ import { fetchQueryResultsFromTermAndValue } from '../api';
  *  - call setIsLoading, set it to false
  */
 const Searchable = (props) => {
+    const {searchTerm, searchValue, setIsLoading, setSearchResults} = props
+    return(
+         <span className="content">
+         <a href="#" onClick={async (event) => {
+            event.preventDefault()
+            setIsLoading(true)
+            try {
+                const result = await fetchQueryResultsFromTermAndValue(searchTerm, searchValue)
+                setSearchResults(result)
+            }
+            catch (error) {
+                console.error(error);
+            } finally{
+                setIsLoading(false);
+            }
+         }}>{searchValue}</a>
+         </span>
+    )
   
 }
 
@@ -68,6 +87,74 @@ const Searchable = (props) => {
  * This component should be exported as default.
  */
 const Feature = (props) => {
+    const {featuredResult,setIsLoading,setSearchResults} = props
+    if(!featuredResult){
+        return <main id="feature"></main>
+    }
+    const {title, dated, images, primaryimageurl, description, culture, style, technique,
+         medium, dimensions, people, department, division, contact, creditline} = featuredResult
+    return (
+    <main id="feature">
+    <div className="object-feature">
+      <header>
+        <h3>{title}</h3>
+        <h4>{dated}</h4>
+      </header>
+      <section className="facts">
+          
+        <span className="title">Culture</span>
+          <Searchable searchValue = {"culture"}  searchTerm = {culture} setSearchResults={setSearchResults} setIsLoading= {setIsLoading}/> 
+       
+
+        <span className="title">Technique</span>
+         <Searchable searchValue = {"technique"} searchTerm = {technique} setSearchResults={setSearchResults} setIsLoading= {setIsLoading}/> 
+
+        
+        <span className="title">Medium</span>
+        <Searchable searchValue = {"medium"} searchTerm = {medium} setSearchResults={setSearchResults} setIsLoading= {setIsLoading}/> 
+
+    { people ? (<React.Fragment>
+    <span className="title">Person</span>
+    {people.map((person) => {
+        return(
+            <Searchable searchValue = {"person"} searchTerm ={person} setSearchResults={setSearchResults} setIsLoading= {setIsLoading}/> 
+        )    
+    })}
+   
+     </React.Fragment>) :null 
+    }
+        <span className="title">Person</span>
+        <Searchable searchValue = {"person"} searchTerm = {medium} setSearchResults={setSearchResults} setIsLoading= {setIsLoading}/> 
+
+        <span className="title">Dimensions</span>
+        <span className="content">{dimensions}</span>
+
+        <span className="title">Department</span>
+        <span className="content">{department}</span>
+
+        <span className="title">Division</span>
+        <span className="content">{division}</span>
+
+        <span className="title">Contact</span>
+        <span className="content">{contact}</span>
+
+        <span className="title">CreditLine</span>
+        <span className="content">{creditline}</span>
+        
+      </section>
+
+
+      <section className="photos">
+        {images ? images.map((image) => {
+            return ( 
+                <img src={image.primaryimageurl} alt={image.description} />
+            )
+        }):null}
+        
+      </section>
+    </div>
+  </main>
+    )
 
 }
 
