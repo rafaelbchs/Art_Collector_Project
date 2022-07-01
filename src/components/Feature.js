@@ -103,40 +103,56 @@ const Feature = (props) => {
       <section className="facts">
           
         <span className="title">Culture</span>
-          <Searchable searchValue = {"culture"}  searchTerm = {culture} setSearchResults={setSearchResults} setIsLoading= {setIsLoading}/> 
+          <Searchable searchValue = {culture}  searchTerm = {culture} setSearchResults={setSearchResults} setIsLoading= {setIsLoading}/> 
        
-
+          {technique ? (<React.Fragment>
         <span className="title">Technique</span>
-         <Searchable searchValue = {"technique"} searchTerm = {technique} setSearchResults={setSearchResults} setIsLoading= {setIsLoading}/> 
+         <Searchable searchValue = {technique} searchTerm = {technique} setSearchResults={setSearchResults} setIsLoading= {setIsLoading}/> 
+         </React.Fragment>):null }
 
-        
+         
+         { medium ? ( <React.Fragment>
         <span className="title">Medium</span>
-        <Searchable searchValue = {"medium"} searchTerm = {medium} setSearchResults={setSearchResults} setIsLoading= {setIsLoading}/> 
+        <Searchable searchValue = {medium} searchTerm = {medium} setSearchResults={setSearchResults} setIsLoading= {setIsLoading}/> 
+      </React.Fragment>):null }
 
-    { people ? (<React.Fragment>
-    <span className="title">Person</span>
+    { people ? (
+
+    <React.Fragment>
     {people.map((person) => {
-        return(
-            <Searchable searchValue = {"person"} searchTerm ={person} setSearchResults={setSearchResults} setIsLoading= {setIsLoading}/> 
-        )    
+      console.log(person)
+        return( 
+        <>
+        <span className="title">Person</span>
+        <Searchable searchValue = {person.name} searchTerm ={person} setSearchResults={setSearchResults} setIsLoading= {setIsLoading}/> 
+       </> 
+       )    
     })}
    
      </React.Fragment>) :null 
     }
-        <span className="title">Person</span>
-        <Searchable searchValue = {"person"} searchTerm = {medium} setSearchResults={setSearchResults} setIsLoading= {setIsLoading}/> 
-
+      
+      { dimensions ? (
+<React.Fragment>
         <span className="title">Dimensions</span>
         <span className="content">{dimensions}</span>
+    </React.Fragment>) :null }
 
+    { department ? (
+<React.Fragment>
         <span className="title">Department</span>
         <span className="content">{department}</span>
+    </React.Fragment>) :null }
+
 
         <span className="title">Division</span>
         <span className="content">{division}</span>
 
+    { contact ? (
+<React.Fragment>
         <span className="title">Contact</span>
-        <span className="content">{contact}</span>
+        <span className="content"><a href="#">{contact}</a></span>
+</React.Fragment>) :null }
 
         <span className="title">CreditLine</span>
         <span className="content">{creditline}</span>
@@ -144,12 +160,19 @@ const Feature = (props) => {
       </section>
 
 
-      <section className="photos">
+      {/* <section className="photos">
         {images ? images.map((image) => {
             return ( 
                 <img src={image.primaryimageurl} alt={image.description} />
             )
         }):null}
+        
+        
+      </section> */}
+      <section className="photos">
+    
+                <img src={primaryimageurl} alt={description} />
+        
         
       </section>
     </div>

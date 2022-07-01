@@ -37,11 +37,10 @@ const Search = (props) => {
    */
   useEffect(() => {
     try{
-    Promise.all([fetchAllCenturies,fetchAllClassifications])
+    Promise.all([fetchAllCenturies(),fetchAllClassifications()])
     .then(([centuries,classifications]) => {
-      console.log(centuries)
-        setCenturyList([centuries]);
-        setClassificationList([classifications]);
+        setCenturyList(centuries);
+        setClassificationList(classifications);
 
       }
     )}
@@ -103,7 +102,7 @@ const Search = (props) => {
         onChange={(event)=>{setClassification(event.target.value)}}>
           <option value="any">Any</option>
         {classificationList.map((value)=>{
-          return <option value="any">{value}</option>
+          return <option value={value.name}>{value.name}</option>
         })}
       </select>
     </fieldset>
@@ -116,7 +115,8 @@ const Search = (props) => {
         onChange={(event)=>{setCentury(event.target.value)}}>
           <option value="any">Any</option>
         {centuryList.map((value)=>{
-          return <option value="any">{value}</option>
+         
+          return <option value={value.name}>{value.name}</option>
         })}
       </select>
      </fieldset>
