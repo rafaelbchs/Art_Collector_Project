@@ -110,8 +110,8 @@ const Search = (props) => {
         value={classification} 
         onChange={(event)=>{setClassification(event.target.value)}}>
           <option value="any">Any</option>
-        {classificationList.map((value)=>{
-          return <option value={value.name}>{value.name}</option>
+        {classificationList.map((value,index)=>{
+          return <option value={value.name} key={index}>{value.name}</option>
         })}
       </select>
     </fieldset>
@@ -123,9 +123,9 @@ const Search = (props) => {
         value={century} 
         onChange={(event)=>{setCentury(event.target.value)}}>
           <option value="any">Any</option>
-        {centuryList.map((value)=>{
+        {centuryList.map((value,index)=>{
          
-          return <option value={value.name}>{value.name}</option>
+          return <option value={value.name} key={index}>{value.name}</option>
         })}
       </select>
      </fieldset>
@@ -137,8 +137,8 @@ const Search = (props) => {
         value={medium} 
         onChange={(event)=>{setMedium(event.target.value)}}>
           <option value="any">Any</option>
-        {mediumList.map((value)=>{   
-          return <option value={value.name}>{value.name}</option>
+        {mediumList.map((value,index)=>{   
+          return <option value={value.name} key={index}>{value.name}</option>
         })}
       </select>
      </fieldset>
