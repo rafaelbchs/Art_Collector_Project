@@ -11,7 +11,7 @@ import {
 } from '../api';
 
 const Search = (props) => {
-  const {setSearchResults, setIsLoading} = props
+  const {setSearchResults, setIsLoading, setFeaturedResult} = props
 
   const [centuryList, setCenturyList] = useState([])
   const [classificationList, setClassificationList] = useState([])
@@ -24,6 +24,8 @@ const Search = (props) => {
   const [medium, setMedium] = useState("any")
   const [mediumList, setMediumList] = useState([])
   
+
+  const [predictionResult, setPredictionResult] = useState([])
   // Make sure to destructure setIsLoading and setSearchResults from the props
   /**
    * We are at the Search component, a child of app. This has a form, so we need to use useState for
@@ -99,8 +101,27 @@ const Search = (props) => {
         type="text" 
         placeholder="enter keywords..." 
         value={queryString} 
-        onChange={(event)=>{
-          setQueryString(event.target.value)}}/>
+        onChange={async (event)=>{
+          setQueryString(event.target.value)
+          
+          try{
+          const results = await fetchQueryResults({
+            century,
+            classification,
+            medium,
+            queryString})
+          setPredictionResult(results.records)
+          }catch(error){
+          console.error(error)
+          }
+          }}/>
+        <ul>
+        {predictionResult.map((result)=>{
+          return(
+            <li onClick={()=>{setFeaturedResult(result)}}>{result.title}</li>
+            )
+        })}
+        </ul>
     </fieldset>
     <fieldset>
       <label htmlFor="select-classification">Classification <span className="classification-count">({ classificationList.length })</span></label>
