@@ -57,7 +57,7 @@ const Preview = (props) => {
                   // prevent the default
                   // set the featured result to be this record, using setFeaturedResult
                 }}
-              >
+              ><a href="#">
                 {
                   record.primaryimageurl ? (
                     <img
@@ -71,6 +71,7 @@ const Preview = (props) => {
                   record.title ? <h3>{record.title}</h3> : <h3>MISSING INFO</h3>
                   // if the record.title exists, add this: <h3>{ record.title }</h3>, otherwise show this: <h3>MISSING INFO</h3>
                 }
+                </a>
               </div>
             );
           })

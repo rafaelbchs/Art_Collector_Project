@@ -145,7 +145,7 @@ const Feature = (props) => {
             </React.Fragment>
           ) : null}
 
-          <span className="title">CreditLine</span>
+          <span className="title">Credit</span>
           <span className="content">{creditline}</span>
         </section>
 
