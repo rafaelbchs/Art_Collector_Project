@@ -40,6 +40,7 @@ const Searchable = (props) => {
             try {
                 const result = await fetchQueryResultsFromTermAndValue(searchTerm, searchValue)
                 setSearchResults(result)
+                console.log(result)
             }
             catch (error) {
                 console.error(error);
@@ -101,30 +102,35 @@ const Feature = (props) => {
         <h4>{dated}</h4>
       </header>
       <section className="facts">
+
+      { description ? (
+<React.Fragment>
+        <span className="title">Description</span>
+        <span className="content">{description}</span>
+    </React.Fragment>) :null }
           
         <span className="title">Culture</span>
-          <Searchable searchValue = {culture}  searchTerm = {culture} setSearchResults={setSearchResults} setIsLoading= {setIsLoading}/> 
+          <Searchable searchValue = {culture}  searchTerm = "culture" setSearchResults={setSearchResults} setIsLoading= {setIsLoading}/> 
        
           {technique ? (<React.Fragment>
         <span className="title">Technique</span>
-         <Searchable searchValue = {technique} searchTerm = {technique} setSearchResults={setSearchResults} setIsLoading= {setIsLoading}/> 
+         <Searchable searchValue = {technique} searchTerm = "technique" setSearchResults={setSearchResults} setIsLoading= {setIsLoading}/> 
          </React.Fragment>):null }
 
          
          { medium ? ( <React.Fragment>
         <span className="title">Medium</span>
-        <Searchable searchValue = {medium} searchTerm = {medium} setSearchResults={setSearchResults} setIsLoading= {setIsLoading}/> 
+        <Searchable searchValue = {medium} searchTerm = "medium" setSearchResults={setSearchResults} setIsLoading= {setIsLoading}/> 
       </React.Fragment>):null }
 
     { people ? (
 
     <React.Fragment>
     {people.map((person) => {
-      console.log(person)
         return( 
         <>
         <span className="title">Person</span>
-        <Searchable searchValue = {person.name} searchTerm ={person} setSearchResults={setSearchResults} setIsLoading= {setIsLoading}/> 
+        <Searchable searchValue = {person.name} searchTerm ="person" setSearchResults={setSearchResults} setIsLoading= {setIsLoading}/> 
        </> 
        )    
     })}
@@ -160,19 +166,13 @@ const Feature = (props) => {
       </section>
 
 
-      {/* <section className="photos">
-        {images ? images.map((image) => {
-            return ( 
-                <img src={image.primaryimageurl} alt={image.description} />
-            )
-        }):null}
-        
-        
-      </section> */}
       <section className="photos">
     
-                <img src={primaryimageurl} alt={description} />
-        
+                {images.map((image)=>{
+                  return (
+                    <img src={image.baseimageurl} alt="any" />
+                  )
+                })}
         
       </section>
     </div>
