@@ -14,14 +14,6 @@ const App = () => {
   const [searchResults,setSearchResults]= useState({info: {}, records: []});
   const [featuredResult,setFeaturedResult]= useState(null);
   const [isLoading,setIsLoading] = useState(false);
-  /**
-   * We are at the App level component, which is top-most. Any state which needs to be shared between immediate children should
-   * be made here, so create state pairs using useState() for:
-   * 
-   * searchResults, setSearchResults (default should be this object:  {info: {}, records: []} )
-   * featuredResult, setFeaturedResult (default should be null)
-   * isLoading, setIsLoading (default should be false)
-   */
 
   return <div className="app">
     {/* <Title /> is static, doesn't need any props */}
