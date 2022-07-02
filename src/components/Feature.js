@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 
 // Don't touch this import
 import { fetchQueryResultsFromTermAndValue } from "../api";
-import Title from "./Title";
+
 
 const Searchable = (props) => {
   const { searchTerm, searchValue, setIsLoading, setSearchResults } = props;
